@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, OnInit, Output, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 export interface ColorDialogData {
   color: string;
@@ -23,7 +24,7 @@ export interface ColorDialogData {
 @Component({
   selector: 'app-color-picker-dialog',
   templateUrl: './color-picker-dialog.component.html',
-  styleUrls: ['./color-picker-dialog.component.scss']
+  styleUrls: ['./color-picker-dialog.component.scss'],
 })
 export class ColorPickerDialogComponent implements OnInit {
   @Output() recolor = new EventEmitter();
@@ -43,17 +44,16 @@ export class ColorPickerDialogComponent implements OnInit {
     'plum',
   ];
 
-  // TODO: #11. Announce changes with LiveAnnouncer
-  constructor(public dialogRef: MatDialogRef<ColorPickerDialogComponent>) { }
+  constructor(
+    public dialogRef: MatDialogRef<ColorPickerDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ColorDialogData,
+    private liveAnnouncer: LiveAnnouncer
+  ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   public changeColor(color: string): void {
-    if (color) {
-      this.recolor.emit(color);
-    }
-
-    // TODO: #11. Announce changes with LiveAnnouncer
+    this.liveAnnouncer.announce(`Select color: ${color}`);
     this.dialogRef.close();
   }
 

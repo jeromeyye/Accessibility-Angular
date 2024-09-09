@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 @use '@angular/material' as mat;
-
-// TODO: #12. Enable HighContrast mode
+@use '@angular/cdk';
 
 :host {
   display: flex;
@@ -89,7 +88,7 @@
     border-radius: 5px;
     background-color: mat.get-color-from-palette(mat.$pink-palette, A100);
 
-    // TODO: #12. Enable HighContrast mode
+    
 
     text-align: center;
     text-transform: uppercase;
@@ -109,6 +108,5 @@
   .purchase-button {
     background-color: mat.get-color-from-palette(mat.$light-green-palette, A100);
 
-    // TODO: #12. Enable HighContrast mode
   }
 }
